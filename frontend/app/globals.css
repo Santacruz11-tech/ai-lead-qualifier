@@ -1,0 +1,169 @@
+@import "tailwindcss";
+
+:root {
+  /* Coastal Teal — dental premium token system */
+  --background: #faf7f2;
+  --surface: #ffffff;
+  --ink: #16231f;
+  --ink-muted: #4b5a55;
+  --ink-faint: #5f6b66;
+  --border: #e4ded3;
+  --accent: #0e7c66;
+  --accent-hover: #0b6553;
+  --accent-soft: #e3f2ed;
+  --surface-nav: #f2ebdb;
+  --hot: #d6483a;
+  --hot-soft: #fbe9e6;
+  --hot-text: #bc3f33;
+  --warm: #db9a34;
+  --warm-soft: #faf0dc;
+  --warm-text: #8c6321;
+  --cold: #778580;
+  --cold-soft: #eef1f0;
+  --cold-text: #64706c;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-surface: var(--surface);
+  --color-ink: var(--ink);
+  --color-ink-muted: var(--ink-muted);
+  --color-ink-faint: var(--ink-faint);
+  --color-border: var(--border);
+  --color-accent: var(--accent);
+  --color-accent-hover: var(--accent-hover);
+  --color-accent-soft: var(--accent-soft);
+  --color-surface-nav: var(--surface-nav);
+  --color-hot: var(--hot);
+  --color-hot-soft: var(--hot-soft);
+  --color-hot-text: var(--hot-text);
+  --color-warm: var(--warm);
+  --color-warm-soft: var(--warm-soft);
+  --color-warm-text: var(--warm-text);
+  --color-cold: var(--cold);
+  --color-cold-soft: var(--cold-soft);
+  --color-cold-text: var(--cold-text);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+body {
+  background: var(--background);
+  color: var(--ink);
+  font-family: var(--font-sans), Arial, Helvetica, sans-serif;
+}
+
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+@layer components {
+  /* Primary CTA: shared by the nav "Book Appointment" and the intake form's
+     submit button so the two never drift into different treatments. */
+  .btn-primary {
+    background-image: linear-gradient(135deg, var(--accent) 0%, var(--accent-hover) 100%);
+    box-shadow:
+      inset 0 1px 0 0 rgba(255, 255, 255, 0.18),
+      0 1px 2px 0 rgba(11, 101, 83, 0.3),
+      0 10px 24px -8px rgba(14, 124, 102, 0.55);
+    transition:
+      box-shadow 0.25s ease,
+      filter 0.25s ease;
+  }
+
+  .btn-primary:hover {
+    box-shadow:
+      inset 0 1px 0 0 rgba(255, 255, 255, 0.22),
+      0 2px 4px 0 rgba(11, 101, 83, 0.32),
+      0 18px 34px -10px rgba(14, 124, 102, 0.6);
+    filter: brightness(1.04);
+  }
+
+  .btn-primary:active {
+    filter: brightness(0.97);
+  }
+
+  .btn-primary:disabled {
+    background-image: none;
+    box-shadow: none;
+    filter: none;
+  }
+
+  /* Secondary link treatment: underline reveals left-to-right on hover.
+     Shared by nav links and footer links for a coordinated (not identical)
+     counterpart to .btn-primary. */
+  .nav-link {
+    position: relative;
+  }
+
+  .nav-link::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 100%;
+    bottom: -3px;
+    height: 1.5px;
+    background: var(--accent);
+    transition: right 0.25s ease;
+  }
+
+  .nav-link:hover::after {
+    right: 0;
+  }
+}
+
+/* react-phone-number-input: reskin to match the form's Tailwind inputs */
+.phone-input-wrapper.PhoneInput {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  width: 100%;
+  border-radius: 0.5rem;
+  border: 1px solid #d4d4d4; /* neutral-300, matches sibling inputs */
+  background: #fff;
+  padding: 0.5rem 0.75rem;
+  transition:
+    border-color 0.2s,
+    box-shadow 0.2s;
+}
+
+.phone-input-wrapper.PhoneInput:focus-within {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 30%, transparent);
+}
+
+.phone-input-wrapper .PhoneInputCountry {
+  margin-right: 0;
+}
+
+.phone-input-wrapper .PhoneInputInput {
+  flex: 1;
+  border: none;
+  outline: none;
+  background: transparent;
+  font-size: 0.875rem;
+  color: var(--ink);
+}
+
+.phone-input-wrapper .PhoneInputInput::placeholder {
+  color: var(--ink-faint);
+}
